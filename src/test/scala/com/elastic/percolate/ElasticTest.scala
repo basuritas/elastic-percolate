@@ -18,9 +18,8 @@ object TestElasticSearchPercolate {
 
 
     // configure the client
-    val client = new PreBuiltTransportClient(Settings.EMPTY)
-      .addTransportAddress(new TransportAddress(InetAddress.getLocalHost, 9200))
-
+    val client = new PreBuiltTransportClient(Settings.builder().put("cluster.name", "percolatetest").build())
+      .addTransportAddress(new TransportAddress(InetAddress.getLocalHost, 9300))
 
     println(s"Client connected: ${client.connectedNodes()}")
 
@@ -37,7 +36,6 @@ object TestElasticSearchPercolate {
       )
       .get()
 
-
     // Obtain a document by id
     /* val responseGet = client.prepareGet("twitter", "tweet", tinyHouseUUID.toString).get
 
@@ -52,7 +50,5 @@ object TestElasticSearchPercolate {
       .setPostFilter(QueryBuilders.rangeQuery("age").from(12).to(18))     // Filter
       .setFrom(0).setSize(60).setExplain(true)
       .get() */
-
   }
-
 }
